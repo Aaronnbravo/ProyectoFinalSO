@@ -1,4 +1,5 @@
 #!/bin/bash
+
 # Colores
 NC='\033[0m' # Sin color
 RED='\033[0;31m' # Rojo
@@ -26,8 +27,12 @@ generate_report() {
 # Función para verificar e instalar actualizaciones del sistema
 install_updates() {
     echo -e "${BLUE}Verificando e instalando actualizaciones del sistema...${NC}"
+    # Actualiza la lista de paquetes
     sudo apt update &>> actualizaciones.log
-    sudo apt upgrade -y &>> actualizaciones.log
+    
+    # Actualiza los paquetes sin necesidad de confirmación
+    sudo DEBIAN_FRONTEND=noninteractive apt upgrade -y &>> actualizaciones.log
+    
     echo -e "${GREEN}Actualizaciones instaladas y registradas en actualizaciones.log.${NC}"
 }
 
@@ -41,7 +46,7 @@ clean_temp_files() {
 
 # Menú interactivo
 while true; do
-    echo -e "${BLUE}=== Menú  ===${NC}"
+    echo -e "${BLUE}=== Menú de incio ===${NC}"
     echo "1. Generar informe de uso de recursos"
     echo "2. Verificar e instalar actualizaciones del sistema"
     echo "3. Eliminar archivos temporales y caché"
