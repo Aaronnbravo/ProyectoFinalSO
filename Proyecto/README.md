@@ -2,7 +2,6 @@
 
 Hola profe, este es nuestro proyecto, realizado por Aaron Bravo, Franco Chocou e Ignacio Gutierrez
 
-
 Descripción breve del proyecto.
 
 Este proyecto incluye un script de Bash que automatiza varias tareas del sistema, tales como:
@@ -19,11 +18,9 @@ Navegar al directorio del proyecto: Una vez que el repositorio está clonado, de
 El repositorio representa el nombre del proyecto.
 
 Permisos de Ejecución: Asegúrate de que el script tenga permisos de ejecución para que pueda correr en la terminal. Esto lo haces con el comando chmod +x.
-chmod +x nombre_del_script.sh
-Cambia nombre_del_script.sh al nombre exacto de tu archivo de script.
+chmod +x proyecto.sh
 
-Ejecutar el Script: Finalmente, puedes ejecutar el script con el siguiente comando ./nombre_del_script.sh
-Nuevamente, reemplaza nombre_del_script.sh con el nombre de tu archivo.
+Ejecutar el Script: Finalmente, puedes ejecutar el script con el siguiente comando ./proyecto.sh
 
 
 Licencia.
