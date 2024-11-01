@@ -41,7 +41,7 @@ clean_temp_files() {
 
 # Menú interactivo
 while true; do
-    echo -e "${BLUE}=== Menú Interactivo ===${NC}"
+    echo -e "${BLUE}=== Menú  ===${NC}"
     echo "1. Generar informe de uso de recursos"
     echo "2. Verificar e instalar actualizaciones del sistema"
     echo "3. Eliminar archivos temporales y caché"
