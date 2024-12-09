@@ -7,10 +7,23 @@ GREEN='\033[0;32m' # Verde
 YELLOW='\033[0;33m' # Amarillo
 BLUE='\033[0;34m' # Azul
 
+# Mensaje de bienvenida
+echo -e "${BLUE}=========================================${NC}"
+echo -e "${GREEN}¡Bienvenido al Administrador del Sistema!${NC}"
+echo -e "${BLUE}=========================================${NC}"
+echo -e "Este script te ayudará a gestionar tareas comunes como:"
+echo -e "- Generar informes de recursos"
+echo -e "- Instalar actualizaciones del sistema"
+echo -e "- Limpiar archivos temporales"
+echo -e "- Realizar backups"
+echo -e "- Crear y gestionar usuarios"
+echo -e "${YELLOW}Por favor, selecciona una opción del menú.${NC}"
+echo
+
 # Función para generar un informe del uso de recursos
 generate_report() {
-    timestamp=$(date +"%Y%m%d_%H%M%S") # Obtiene la fecha y hora actual
-    report_file="uso_recursos_$timestamp.log" # Usa la fecha en el nombre del archivo
+    timestamp=$(date +"%Y%m%d_%H%M%S")
+    report_file="uso_recursos_$timestamp.log"
 
     echo -e "${BLUE}Generando informe de uso de recursos...${NC}"
     echo "Uso de CPU, Memoria y Disco" > "$report_file"
