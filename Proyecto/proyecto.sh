@@ -17,8 +17,11 @@ echo -e "- Instalar actualizaciones del sistema"
 echo -e "- Limpiar archivos temporales"
 echo -e "- Realizar backups"
 echo -e "- Crear y gestionar usuarios"
-echo -e "${YELLOW}Por favor, selecciona una opción del menú.${NC}"
+echo -e "${YELLOW}Por favor, presiona Enter para continuar.${NC}"
 echo
+
+# Esperar a que el usuario presione Enter
+read -p "Presiona Enter para continuar... "
 
 # Función para generar un informe del uso de recursos
 generate_report() {
