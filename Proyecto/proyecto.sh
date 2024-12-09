@@ -6,22 +6,28 @@ RED='\033[0;31m' # Rojo
 GREEN='\033[0;32m' # Verde
 YELLOW='\033[0;33m' # Amarillo
 BLUE='\033[0;34m' # Azul
+MAGENTA='\033[0;35m' # Magenta
+CYAN='\033[0;36m' # Cian
+OPTION_COLOR='\033[0;36m' # Color para las opciones del menú (Cian)
 
 # Mensaje de bienvenida
-echo -e "${BLUE}=========================================${NC}"
-echo -e "${GREEN}¡Bienvenido al Administrador del Sistema!${NC}"
-echo -e "${BLUE}=========================================${NC}"
-echo -e "Este script te ayudará a gestionar tareas comunes como:"
-echo -e "- Generar informes de recursos"
-echo -e "- Instalar actualizaciones del sistema"
-echo -e "- Limpiar archivos temporales"
-echo -e "- Realizar backups"
-echo -e "- Crear y gestionar usuarios"
-echo -e "${YELLOW}Por favor, presiona Enter para continuar.${NC}"
+echo -e "${CYAN}=========================================${NC}"
+echo -e "${MAGENTA}¡Bienvenido al Administrador del Sistema!${NC}"
+echo -e "${CYAN}=========================================${NC}"
+echo -e "${GREEN}Este script te ayudará a gestionar tareas comunes como:${NC}"
+echo -e "${YELLOW}- Generar informes de recursos${NC}"
+echo -e "${YELLOW}- Instalar actualizaciones del sistema${NC}"
+echo -e "${YELLOW}- Limpiar archivos temporales${NC}"
+echo -e "${YELLOW}- Realizar backups${NC}"
+echo -e "${YELLOW}- Crear y gestionar usuarios${NC}"
+echo -e "${BLUE}Por favor, presiona Enter para continuar.${NC}"
 echo
 
 # Esperar a que el usuario presione Enter
 read -p "Presiona Enter para continuar... "
+
+# Limpiar la terminal
+clear
 
 # Función para generar un informe del uso de recursos
 generate_report() {
@@ -82,71 +88,5 @@ backup_directory() {
     echo -e "${YELLOW}Backups antiguos eliminados (más de $days días).${NC}"
 }
 
-# Función para crear un usuario nuevo y gestionar permisos
-create_user() {
-    read -p "Ingresa el nombre del nuevo usuario: " username
+# Función para crear un usuario nuevo y g
 
-    if id "$username" &>/dev/null; then
-        echo -e "${RED}El usuario '$username' ya existe.${NC}"
-        return
-    fi
-
-    sudo adduser "$username"
-    echo -e "${GREEN}Usuario '$username' creado exitosamente.${NC}"
-
-    echo -e "${BLUE}Configurando permisos y directorio personal...${NC}"
-    sudo chmod 700 /home/"$username"
-    echo -e "${GREEN}Directorio personal asegurado para el usuario '$username'.${NC}"
-
-    read -p "¿Deseas agregar al usuario a algún grupo adicional? (y/n): " add_group
-    if [[ "$add_group" == "y" || "$add_group" == "Y" ]]; then
-        read -p "Ingresa el nombre del grupo: " group
-        if getent group "$group" &>/dev/null; then
-            sudo usermod -aG "$group" "$username"
-            echo -e "${GREEN}Usuario '$username' añadido al grupo '$group'.${NC}"
-        else
-            echo -e "${RED}El grupo '$group' no existe.${NC}"
-        fi
-    fi
-
-    echo -e "${BLUE}Detalles del usuario creado:${NC}"
-    id "$username"
-}
-
-# Menú interactivo
-while true; do
-    echo -e "${BLUE}=== Menú de inicio ===${NC}"
-    echo "1. Generar informe de uso de recursos"
-    echo "2. Verificar e instalar actualizaciones del sistema"
-    echo "3. Eliminar archivos temporales y caché"
-    echo "4. Automatizar respaldo de un directorio"
-    echo "5. Crear usuario nuevo y gestionar permisos"
-    echo "6. Salir"
-    read -p "Selecciona una opción: " opcion
-
-    case $opcion in
-        1)
-            generate_report
-            ;;
-        2)
-            install_updates
-            ;;
-        3)
-            clean_temp_files
-            ;;
-        4)
-            backup_directory
-            ;;
-        5)
-            create_user
-            ;;
-        6)
-            echo -e "${RED}Saliendo...${NC}"
-            break
-            ;;
-        *)
-            echo -e "${RED}Opción no válida. Por favor, selecciona otra opción.${NC}"
-            ;;
-    esac
-    echo
-done
