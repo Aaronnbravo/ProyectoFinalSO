@@ -88,5 +88,71 @@ backup_directory() {
     echo -e "${YELLOW}Backups antiguos eliminados (más de $days días).${NC}"
 }
 
-# Función para crear un usuario nuevo y g
+# Función para crear un usuario nuevo y gestionar permisos
+create_user() {
+    read -p "Ingresa el nombre del nuevo usuario: " username
 
+    if id "$username" &>/dev/null; then
+        echo -e "${RED}El usuario '$username' ya existe.${NC}"
+        return
+    fi
+
+    sudo adduser "$username"
+    echo -e "${GREEN}Usuario '$username' creado exitosamente.${NC}"
+
+    echo -e "${BLUE}Configurando permisos y directorio personal...${NC}"
+    sudo chmod 700 /home/"$username"
+    echo -e "${GREEN}Directorio personal asegurado para el usuario '$username'.${NC}"
+
+    read -p "¿Deseas agregar al usuario a algún grupo adicional? (y/n): " add_group
+    if [[ "$add_group" == "y" || "$add_group" == "Y" ]]; then
+        read -p "Ingresa el nombre del grupo: " group
+        if getent group "$group" &>/dev/null; then
+            sudo usermod -aG "$group" "$username"
+            echo -e "${GREEN}Usuario '$username' añadido al grupo '$group'.${NC}"
+        else
+            echo -e "${RED}El grupo '$group' no existe.${NC}"
+        fi
+    fi
+
+    echo -e "${BLUE}Detalles del usuario creado:${NC}"
+    id "$username"
+}
+
+# Menú interactivo
+while true; do
+    echo -e "${CYAN}=== Menú de inicio ===${NC}"
+    echo -e "${OPTION_COLOR}1. Generar informe de uso de recursos${NC}"
+    echo -e "${OPTION_COLOR}2. Verificar e instalar actualizaciones del sistema${NC}"
+    echo -e "${OPTION_COLOR}3. Limpiar archivos temporales y caché${NC}"
+    echo -e "${OPTION_COLOR}4. Realizar backup de un directorio${NC}"
+    echo -e "${OPTION_COLOR}5. Crear un nuevo usuario${NC}"
+    echo -e "${OPTION_COLOR}6. Salir${NC}"
+    read -p "Selecciona una opción: " opcion
+
+    case $opcion in
+        1)
+            generate_report
+            ;;
+        2)
+            install_updates
+            ;;
+        3)
+            clean_temp_files
+            ;;
+        4)
+            backup_directory
+            ;;
+        5)
+            create_user
+            ;;
+        6)
+            echo -e "${RED}Saliendo...${NC}"
+            break
+            ;;
+        *)
+            echo -e "${RED}Opción no válida. Por favor, selecciona otra opción.${NC}"
+            ;;
+    esac
+    echo # Línea en blanco para mejor legibilidad
+done
